@@ -41,7 +41,7 @@ public class UserController {
 
     }
 
-    @PutMapping("/{id]")
+    @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable String id, @Valid @RequestBody User userDetails) {
         //gérer la modification et l'enregistrement en BDD ou erreur
         return userRepository.findById(id)
