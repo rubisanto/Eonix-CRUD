@@ -1,17 +1,18 @@
 package com.eonix.CRUD.userservice.model;
 
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
+
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@Document
-public class User {
+@Entity
+public class UserEntity {
 
     //ajout de la dépendance spring-boot-starter-validation pour les @notblank
     //ajout de la dépendance lombock pour le constructor, getter et setter
@@ -24,4 +25,5 @@ public class User {
 
     @NotBlank(message = "Last Name must not be empty")
     private String lastName;
+
 }

@@ -1,6 +1,6 @@
 package com.eonix.CRUD.userservice.controller;
 
-import com.eonix.CRUD.userservice.model.User;
+import com.eonix.CRUD.userservice.model.UserEntity;
 import com.eonix.CRUD.userservice.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +19,20 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = userRepository.save(user);
+    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity userEntity) {
+        UserEntity savedUser = userRepository.save(userEntity);
         return ResponseEntity.ok(savedUser);
     }
 
     //se référer au MongoRepository pour les méthodes
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable String id) {
-        Optional<User> user = userRepository.findById(id);
+    public ResponseEntity<UserEntity> getUserById(@PathVariable String id) {
+        Optional<UserEntity> user = userRepository.findById(id);
         if (user.isPresent()) {
             return ResponseEntity.ok(user.get());
         } else {
@@ -42,13 +42,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @Valid @RequestBody User userDetails) {
+    public ResponseEntity<UserEntity> updateUser(@PathVariable String id, @Valid @RequestBody UserEntity userDetails) {
         //gérer la modification et l'enregistrement en BDD ou erreur
         return userRepository.findById(id)
                 .map(user -> {
                     user.setFirstName(userDetails.getFirstName());
                     user.setLastName(userDetails.getLastName());
-                    User updatedUser = userRepository.save(user);
+                    UserEntity updatedUser = userRepository.save(user);
                     return ResponseEntity.ok(updatedUser);
                 }).orElse(ResponseEntity.notFound().build());
     }
