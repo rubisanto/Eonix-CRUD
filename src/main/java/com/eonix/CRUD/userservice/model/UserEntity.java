@@ -1,11 +1,15 @@
 package com.eonix.CRUD.userservice.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+
+import java.util.UUID;
 
 
 @Data
@@ -18,7 +22,8 @@ public class UserEntity {
     //ajout de la dépendance lombock pour le constructor, getter et setter
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @NotBlank(message = "First Name must not be empty")
     private String firstName;

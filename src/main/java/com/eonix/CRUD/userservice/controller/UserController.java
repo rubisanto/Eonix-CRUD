@@ -1,37 +1,48 @@
 package com.eonix.CRUD.userservice.controller;
 
+import com.eonix.CRUD.userservice.dto.UserDto;
 import com.eonix.CRUD.userservice.model.UserEntity;
 import com.eonix.CRUD.userservice.repository.UserRepository;
+import com.eonix.CRUD.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/")
 public class UserController {
+
+    private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+    @GetMapping("users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity userEntity) {
-        UserEntity savedUser = userRepository.save(userEntity);
-        return ResponseEntity.ok(savedUser);
+    @PostMapping("users/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
     //se référer au MongoRepository pour les méthodes
-    @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable String id) {
+    @GetMapping("users/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable UUID id) {
         Optional<UserEntity> user = userRepository.findById(id);
         if (user.isPresent()) {
             return ResponseEntity.ok(user.get());
@@ -41,8 +52,8 @@ public class UserController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable String id, @Valid @RequestBody UserEntity userDetails) {
+    @PutMapping("users/{id}/update")
+    public ResponseEntity<UserEntity> updateUser(@PathVariable("id") UUID id, @Valid @RequestBody UserEntity userDetails) {
         //gérer la modification et l'enregistrement en BDD ou erreur
         return userRepository.findById(id)
                 .map(user -> {
@@ -53,8 +64,8 @@ public class UserController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String id ) {
+    @DeleteMapping("users/{id}/delete")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id ) {
         return userRepository.findById(id)
                 .map(user -> {
                     userRepository.delete(user);
