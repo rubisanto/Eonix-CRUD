@@ -42,26 +42,15 @@ public class UserController {
 
     //se référer au MongoRepository pour les méthodes
     @GetMapping("users/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable UUID id) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<UserDto> getUserById(@PathVariable UUID id) {
+        return ResponseEntity.ok(userService.getUserById(id));
 
     }
 
     @PutMapping("users/{id}/update")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable("id") UUID id, @Valid @RequestBody UserEntity userDetails) {
-        //gérer la modification et l'enregistrement en BDD ou erreur
-        return userRepository.findById(id)
-                .map(user -> {
-                    user.setFirstName(userDetails.getFirstName());
-                    user.setLastName(userDetails.getLastName());
-                    UserEntity updatedUser = userRepository.save(user);
-                    return ResponseEntity.ok(updatedUser);
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") UUID id, @RequestBody UserDto userDto) {
+        UserDto response = userService.updateUser(userDto, id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("users/{id}/delete")

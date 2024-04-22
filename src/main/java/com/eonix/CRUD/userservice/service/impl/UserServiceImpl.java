@@ -1,6 +1,7 @@
 package com.eonix.CRUD.userservice.service.impl;
 
 import com.eonix.CRUD.userservice.dto.UserDto;
+import com.eonix.CRUD.userservice.exceptions.UserNotFoundException;
 import com.eonix.CRUD.userservice.model.UserEntity;
 import com.eonix.CRUD.userservice.repository.UserRepository;
 import com.eonix.CRUD.userservice.service.UserService;
@@ -8,10 +9,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
+    @Override
+    public UserDto getUserById(UUID id) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User could not be found"));
+        return mapToDto(userEntity);
+    }
+
+    @Override
+    public UserDto updateUser(UserDto userDto, UUID id) {
+        //trouver le bon user
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User could not be updated"));
+
+        //mettre à jour avec les nouvelles data
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+
+        //return l'entity par le dto car sinon bug de type
+        UserEntity updatedUser = userRepository.save(userEntity);
+
+        return mapToDto(updatedUser);
+    }
+
     private UserRepository userRepository;
 
     @Autowired
