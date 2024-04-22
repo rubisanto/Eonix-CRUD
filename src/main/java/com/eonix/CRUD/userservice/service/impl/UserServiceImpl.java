@@ -35,6 +35,12 @@ public class UserServiceImpl implements UserService{
         return mapToDto(updatedUser);
     }
 
+    @Override
+    public void deleteUserId(UUID id) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User could not be deleted"));
+        userRepository.delete(userEntity);
+    }
+
     private UserRepository userRepository;
 
     @Autowired
@@ -49,6 +55,8 @@ public class UserServiceImpl implements UserService{
         userEntity.setLastName(userDto.getLastName());
 
         UserEntity newUser = userRepository.save(userEntity);
+
+        return mapToDto(newUser);
     }
 
     @Override

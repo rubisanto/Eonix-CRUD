@@ -1,17 +1,15 @@
 package com.eonix.CRUD.userservice.controller;
 
 import com.eonix.CRUD.userservice.dto.UserDto;
-import com.eonix.CRUD.userservice.model.UserEntity;
 import com.eonix.CRUD.userservice.repository.UserRepository;
 import com.eonix.CRUD.userservice.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.UUID;
 
 
@@ -54,12 +52,9 @@ public class UserController {
     }
 
     @DeleteMapping("users/{id}/delete")
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID id ) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    userRepository.delete(user);
-                    return ResponseEntity.ok().<Void>build();
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<String> deleteUser(@PathVariable UUID id ) {
+        userService.deleteUserId(id);
+        return new ResponseEntity<>("User deleted", HttpStatus.OK);
     }
 
 
