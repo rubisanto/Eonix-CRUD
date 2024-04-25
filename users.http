@@ -1,10 +1,35 @@
-### Get all users
+### Get All Users
 GET http://localhost:8080/api/users
+Accept: application/json
 
-### Post with Body
+### Get User by Specific ID - John Doe
+GET http://localhost:8080/api/users/a0fda7a4-7572-4fba-a550-4890f0d9b101
+Accept: application/json
+
+### Custom Search Users by Name (Use a relevant name part to test)
+GET http://localhost:8080/api/users/search=John
+Accept: application/json
+
+### Create User
 POST http://localhost:8080/api/users/create
 Content-Type: application/json
+Accept: application/json
 
 {
-
+  "firstName": "Charlie",
+  "lastName": "Brown"
 }
+
+### Update User - Jane Smith
+PUT http://localhost:8080/api/users/b5fa5c9e-5e9d-411f-bdc3-684df8f206e3/update
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe"
+}
+
+### Delete User - Alice Johnson
+DELETE http://localhost:8080/api/users/b5fa5c9e-5e9d-411f-bdc3-684df8f206e3/delete
+Accept: application/json

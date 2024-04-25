@@ -16,6 +16,9 @@ public interface UserService {
 
     void deleteUserId(UUID id);
 
+    //la custom search
+    List<UserDto> customSearch(String name);
+
 
 
 }

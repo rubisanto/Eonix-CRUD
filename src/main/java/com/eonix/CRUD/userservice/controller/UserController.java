@@ -32,18 +32,23 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @GetMapping("users/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable UUID id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+
+    }
+
+    @GetMapping("users/search={name}")
+    public ResponseEntity<List<UserDto>> getCustomUsers(@PathVariable String name ) {
+        return new ResponseEntity<>(userService.customSearch(name), HttpStatus.OK);
+    }
+
     @PostMapping("users/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
-    //se référer au MongoRepository pour les méthodes
-    @GetMapping("users/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable UUID id) {
-        return ResponseEntity.ok(userService.getUserById(id));
-
-    }
 
     @PutMapping("users/{id}/update")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") UUID id, @RequestBody UserDto userDto) {

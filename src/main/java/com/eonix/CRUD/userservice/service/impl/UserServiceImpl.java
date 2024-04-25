@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(userEntity);
     }
 
+    @Override
+    public List<UserDto> customSearch(String name) {
+        List<UserEntity> userEntities = userRepository.customSearch(name);
+        return userEntities.stream().map(userEntity -> mapToDto(userEntity)).collect(Collectors.toList());
+    }
+
     private UserRepository userRepository;
 
     @Autowired
@@ -70,8 +76,8 @@ public class UserServiceImpl implements UserService{
     private UserDto mapToDto(UserEntity userEntity) {
         UserDto userDto = new UserDto();
         userDto.setId(userEntity.getId());
-        userDto.setFirstName(userDto.getFirstName());
-        userDto.setLastName(userDto.getLastName());
+        userDto.setFirstName(userEntity.getFirstName());
+        userDto.setLastName(userEntity.getLastName());
         return userDto;
     }
 
@@ -80,7 +86,7 @@ public class UserServiceImpl implements UserService{
         UserEntity userEntity = new UserEntity();
 
         userEntity.setFirstName(userDto.getFirstName());
-        userEntity.setLastName(userEntity.getLastName());
+        userEntity.setLastName(userDto.getLastName());
         return userEntity;
     }
 }
