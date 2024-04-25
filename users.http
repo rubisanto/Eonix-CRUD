@@ -17,11 +17,11 @@ Accept: application/json
 
 {
   "firstName": "Charlie",
-  "lastName": "Brown2"
+  "lastName": "Brown3"
 }
 
 ### Update User - Jane Smith
-PUT http://localhost:8080/api/users/b5fa5c9e-5e9d-411f-bdc3-684df8f206e3/update
+PUT http://localhost:8080/api/users/a0fda7a4-7572-4fba-a550-4890f0d9b101/update
 Content-Type: application/json
 Accept: application/json
 

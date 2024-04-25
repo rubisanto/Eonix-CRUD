@@ -29,9 +29,11 @@ public class UserEntity {
     private UUID id;
 
     @Column(name = "first_name")
+    @NotBlank(message = "firstName is mandatory")
     private String firstName;
 
     @Column(name = "last_name")
+    @NotBlank(message = "lastname is mandatory")
     private String lastName;
 
 }

@@ -3,6 +3,7 @@ package com.eonix.CRUD.userservice.controller;
 import com.eonix.CRUD.userservice.dto.UserDto;
 import com.eonix.CRUD.userservice.repository.UserRepository;
 import com.eonix.CRUD.userservice.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +46,13 @@ public class UserController {
 
     @PostMapping("users/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
 
     @PutMapping("users/{id}/update")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") UUID id, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@Valid @PathVariable("id") UUID id, @RequestBody UserDto userDto) {
         UserDto response = userService.updateUser(userDto, id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
