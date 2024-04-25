@@ -6,8 +6,8 @@ Accept: application/json
 GET http://localhost:8080/api/users/a0fda7a4-7572-4fba-a550-4890f0d9b101
 Accept: application/json
 
-### Custom Search Users by Name (Use a relevant name part to test)
-GET http://localhost:8080/api/users/search=John
+### Custom Search Users by Name
+GET http://localhost:8080/api/users/search=Joh
 Accept: application/json
 
 ### Create User
@@ -17,7 +17,7 @@ Accept: application/json
 
 {
   "firstName": "Charlie",
-  "lastName": "Brown"
+  "lastName": "Brown2"
 }
 
 ### Update User - Jane Smith
@@ -31,5 +31,5 @@ Accept: application/json
 }
 
 ### Delete User - Alice Johnson
-DELETE http://localhost:8080/api/users/b5fa5c9e-5e9d-411f-bdc3-684df8f206e3/delete
+DELETE http://localhost:8080/api/users/6e1a6cfe-d217-422d-9596-322ab602cfa5/delete
 Accept: application/json
