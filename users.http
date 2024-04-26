@@ -7,7 +7,7 @@ GET http://localhost:8080/api/users/a0fda7a4-7572-4fba-a550-4890f0d9b101
 Accept: application/json
 
 ### Custom Search Users by Name
-GET http://localhost:8080/api/users/search=Joh
+GET http://localhost:8080/api/users/search=Cha
 Accept: application/json
 
 ### Create User
@@ -31,5 +31,5 @@ Accept: application/json
 }
 
 ### Delete User - Alice Johnson
-DELETE http://localhost:8080/api/users/6e1a6cfe-d217-422d-9596-322ab602cfa5/delete
+DELETE http://localhost:8080/api/users/f80c70aa-fad9-4e9d-bf77-625de2ec4c05/delete
 Accept: application/json
